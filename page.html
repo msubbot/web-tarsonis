@@ -9,7 +9,18 @@
     </head>
     <body>
         <div class="search" ng-controller = "allSearch">
-
+            <div class="search_group">
+                <p><input placeholder="Enter word" ng-model="searchWord" class="search_input" id="searchWord"/></p>
+                <div ng-show="noSearchWord">Enter Search Word!</div>
+                <p><input placeholder="Max results" ng-model="searchMaxResults" class="search_input" id="searchMaxResults"/></p>
+                <div ng-show="noMaxResults">Enter Max Results!</div>
+                <p><input type="Button" value="Search" ng-click="searchByWord()" class="search_butt"/></p>
+            </div>
+            <div class="results_group">
+                <div class="result" ng-repeat="item in requestResults.items">
+                    <div class="title">{{item.snippet.title}}</div>
+                </div>
+            </div>
         </div>
     </body>
 </html>

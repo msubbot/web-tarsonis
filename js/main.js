@@ -1,10 +1,5 @@
 var key = "AIzaSyAVZzUdPUyWFbuPXChAcIGX8hHwgoBghmw";
-var OAUTH2_CLIENT_ID = '777808237661-5i6715akvm1ju8oia0ghu2ph620vg6ka.apps.googleusercontent.com';
-var OAUTH2_SCOPES = [
-    'https://www.googleapis.com/auth/youtube'
-];
-
-var requestEX = "https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=5&q=pewdiepie&key=AIzaSyAVZzUdPUyWFbuPXChAcIGX8hHwgoBghmw";
+var requestExample = "https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=5&q=pewdiepie&key=AIzaSyAVZzUdPUyWFbuPXChAcIGX8hHwgoBghmw";
 
 /*googleApiClientReady = function() {
     gapi.auth.init(function() {
@@ -43,25 +38,41 @@ function searchByKeyword() {
     }
 } */
 
-var search = angular.module('search');
+var search = angular.module('search',[]);
 search.controller('allSearch', ['$scope', "$log",
-    function () {
-        var xhr = new XMLHttpRequest();
-        var request = 'https://www.googleapis.com/youtube/v3/search?part=snippet&';
-        parameter = "maxResults=5";
-        addRequestParameter(parameter);
-        console.log(request);
-        parameter = "q=pewdiepie";
-        addRequestParameter(parameter);
-        console.log(request);
-        addKey();
-        console.log(request);
-        xhr.open('GET', request , false);
-        xhr.send();
-        if (xhr.status != 200) {
-            alert( xhr.status + ': ' + xhr.statusText );
-        } else {
-            console.log( xhr.responseText );
+    function ($scope) {
+        var request = 'https://www.googleapis.com/youtube/v3/search?part=snippet&type=video&order=viewCount&';
+        $scope.searchByWord =  function () {
+            $scope.noMaxResults = false;
+            $scope.noSearchWord = false;
+            var parameter = "";
+            if(document.getElementById("searchWord").value == 0) {
+                parameter = "q=cookies";
+                $scope.noSearchWord = true;
+                return 0;
+            }
+            else
+                parameter = "q=" + document.getElementById("searchWord").value;
+            addRequestParameter(parameter);
+            if(document.getElementById("searchMaxResults").value == 0) {
+                parameter = "maxResults=5";
+                $scope.noMaxResults = true;
+                return 0;
+            }
+            else
+                parameter = "maxResults=" + document.getElementById("searchMaxResults").value;
+            addRequestParameter(parameter);
+            addKey();
+            var xhr = new XMLHttpRequest();
+            xhr.open('GET', request , false);
+            xhr.send();
+            if (xhr.status != 200) {
+                alert( xhr.status + ': ' + xhr.statusText );
+            } else {
+                var requestResultsString = xhr.responseText;
+                $scope.requestResults = JSON.parse(requestResultsString);
+                //console.log(requestResults.items);
+            }
         }
 
         function addAnd () {
@@ -69,7 +80,6 @@ search.controller('allSearch', ['$scope', "$log",
         }
 
         function addKey() {
-            addAnd();
             request = request + 'key=' + key;
         }
 
