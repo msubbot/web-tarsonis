@@ -2,23 +2,32 @@
 <html ng-app = "search">
     <head>
         <title>Tarsonis</title>
-        <script src="https://apis.google.com/js/api.js"></script>
+        <meta charset="utf-8">
+        <!--<script src="https://apis.google.com/js/api.js"></script>-->
         <script type="text/javascript" src="js/libs/jquery/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.5/js/bootstrap.min.js" integrity="sha384-BLiI7JTZm+JWlgKa0M0kGRpJbF2J8q+qreVrKBC47e3K6BW78kGLrCkeRX6I9RoK" crossorigin="anonymous"></script>
+        <!--<script type="text/javascript" src="js/libs/tether/tether.js"></script>-->
         <script type="text/javascript" src="js/libs/angular/angular.js"></script>
         <script type="text/javascript" src="js/main.js"></script>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.5/css/bootstrap.min.css" integrity="sha384-AysaV+vQoT3kOAXZkl02PThvDr8HYKPZhNT5h/CXfBThSRXQ6jW5DO2ekP5ViFdi" crossorigin="anonymous">
+        <link rel="stylesheet" href="css/main.css">
     </head>
     <body>
-        <div class="search" ng-controller = "allSearch">
-            <div class="search_group">
+        <div class="search container" ng-controller = "allSearch">
+            <h1 class="head container-fluid">Search video</h1>
+            <div class="search_group container-fluid">
                 <p><input placeholder="Enter word" ng-model="searchWord" class="search_input" id="searchWord"/></p>
-                <div ng-show="noSearchWord">Enter Search Word!</div>
+                <h5><div ng-show="noSearchWord">Enter word, please</div></h5>
                 <p><input placeholder="Max results" ng-model="searchMaxResults" class="search_input" id="searchMaxResults"/></p>
-                <div ng-show="noMaxResults">Enter Max Results!</div>
+                <h5><div ng-show="noMaxResults">Enter max results correctly</div></h5>
                 <p><input type="Button" value="Search" ng-click="searchByWord()" class="search_butt"/></p>
             </div>
-            <div class="results_group">
+            <div class="results_group container">
+                <h3 ng-show="showResults">Results:</h3><br>
                 <div class="result" ng-repeat="item in requestResults.items">
-                    <div class="title">{{item.snippet.title}}</div>
+                        <h6>{{item.snippet.title}}</h6>
+                        <img ng-src="{{item.snippet.thumbnails.default.url}}">
+                    <hr>
                 </div>
             </div>
         </div>

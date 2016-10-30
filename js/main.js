@@ -7,17 +7,18 @@ search.controller('allSearch', ['$scope', "$log",
             var request = requestDefault;
             $scope.noMaxResults = false;
             $scope.noSearchWord = false;
+            $scope.showResults = false;
+            $scope.requestResults = "";
             var parameter = "";
             if(document.getElementById("searchWord").value == 0) {
-                parameter = "q=cookies";
                 $scope.noSearchWord = true;
                 return 0;
             }
             else
                 parameter = "q=" + document.getElementById("searchWord").value;
             addRequestParameter(parameter);
-            if(document.getElementById("searchMaxResults").value == 0) {
-                parameter = "maxResults=5";
+            var numCheck = isNumeric(document.getElementById("searchMaxResults").value);
+            if((document.getElementById("searchMaxResults").value == 0) || (numCheck == !true)) {
                 $scope.noMaxResults = true;
                 return 0;
             }
@@ -33,14 +34,15 @@ search.controller('allSearch', ['$scope', "$log",
                         if (xhr.status == 200 ) {
                             resolve(xhr.response);
                             var requestResultsString = xhr.responseText;
+                            console.log(requestResultsString);
                             $scope.requestResults = JSON.parse(requestResultsString);
                         } else {
                             reject(xhr.status + ': ' + xhr.statusText);
                             console.log("REJECTED");
                         }
                     };
-                    console.log(requestFinal);
                     xhr.send();
+                    $scope.showResults = true;
                 });
             };
             searchRequest(request);
@@ -56,6 +58,10 @@ search.controller('allSearch', ['$scope', "$log",
             function addRequestParameter (parameter){
                 request = request + parameter;
                 addAnd();
+            }
+
+            function isNumeric(n) {
+                return !isNaN(parseFloat(n)) && isFinite(n);
             }
         }
     }]);

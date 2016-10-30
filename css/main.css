@@ -1,0 +1,24 @@
+.head   {
+    width: 370px;
+}
+.search_group   {
+    width: 300px;
+}
+.results_group {
+    width: 500px;
+}
+.results_group > .result  {
+    width: 500px;
+}
+.results_group > .result > h6  {
+    float: right;
+    width: 300px;
+}
+.results_group > .result > img  {
+    border-radius: 100%;
+    width: 140px;
+    height: 140px;
+}
+.search_butt    {
+    margin-left: 50px;
+}
