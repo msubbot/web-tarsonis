@@ -47,6 +47,20 @@ search.controller('allSearch', ['$scope', "$log",
             };
             searchRequest(request);
 
+            /*var searchRequest = function (requestFinal) {
+                fetch(requestFinal)
+                    .then(function(response) {
+                        console.log(response.status);
+                        var requestResultsObj;
+                        return requestResultsObj = response.json();
+                    })
+                    .then(function(requestResultsObj) {
+                        $scope.requestResults = requestResultsObj;
+                    })
+                    .catch(alert);
+             };
+             searchRequest(request); */
+
             function addAnd () {
                 request = request + '&';
             }
